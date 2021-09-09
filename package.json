@@ -7,7 +7,7 @@
 		"build": "next build",
 		"start": "next start",
 		"lint": "next lint",
-		"test": "mocha"
+		"test": "jest"
 	},
 	"dependencies": {
 		"next": "11.1.2",
@@ -15,9 +15,17 @@
 		"react-dom": "17.0.2"
 	},
 	"devDependencies": {
+		"@babel/core": "^7.15.5",
+		"@babel/plugin-transform-react-jsx": "^7.14.9",
+		"@babel/preset-env": "^7.15.6",
+		"@babel/preset-react": "^7.14.5",
+		"@babel/preset-typescript": "^7.15.0",
+		"@testing-library/jest-dom": "^4.2.4",
 		"@testing-library/react": "^12.0.0",
-		"@types/mocha": "^9.0.0",
+		"@types/jest": "^27.0.1",
 		"@types/react": "17.0.20",
+		"@types/react-dom": "^17.0.9",
+		"@types/testing-library__jest-dom": "^5.14.1",
 		"@typescript-eslint/eslint-plugin": "^4.31.0",
 		"@typescript-eslint/parser": "^4.31.0",
 		"eslint": "^7.32.0",
@@ -27,12 +35,38 @@
 		"eslint-plugin-node": "^11.1.0",
 		"eslint-plugin-promise": "^5.1.0",
 		"eslint-plugin-react": "^7.25.1",
-		"global-jsdom": "^8.2.0",
 		"husky": "^7.0.0",
+		"jest": "^27.1.1",
 		"jsdom": "^17.0.0",
 		"lint-staged": "^11.1.2",
 		"mocha": "^9.1.1",
 		"prettier": "^2.4.0",
 		"typescript": "4.4.2"
+	},
+	"jest": {
+		"testEnvironment": "jsdom"
+	},
+	"babel": {
+		"presets": [
+			"@babel/preset-react",
+			"@babel/preset-env",
+			"@babel/preset-typescript"
+		],
+		"plugins": [
+			"@babel/plugin-transform-react-jsx"
+		]
+	},
+	"browserslist": {
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all",
+			"not ie <= 11"
+		],
+		"development": [
+			"last 1 chrome version",
+			"last 1 firefox version",
+			"last 1 safari version"
+		]
 	}
 }
