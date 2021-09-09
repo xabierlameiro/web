@@ -8,7 +8,7 @@ const Home: NextPage = (): JSX.Element => {
 		}
 	return (
 		<h1>
-			Web personal wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww222222222222222222<button onClick={bla}></button>
+			Web personal<button onClick={bla}></button>
 		</h1>
 	)
 }
