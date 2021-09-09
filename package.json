@@ -1,39 +1,30 @@
 {
-  "name": "hi",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "next": "11.1.2",
-    "react": "17.0.2",
-    "react-dom": "17.0.2"
-  },
-  "devDependencies": {
-    "@types/react": "17.0.20",
-    "@typescript-eslint/eslint-plugin": "^4.31.0",
-    "@typescript-eslint/parser": "^4.31.0",
-    "eslint": "^7.32.0",
-    "eslint-config-next": "11.1.2",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-config-standard": "^16.0.3",
-    "eslint-plugin-react": "^7.25.1",
-    "husky": "^7.0.2",
-    "lint-staged": "^11.1.2",
-    "prettier": "^2.4.0",
-    "typescript": "4.4.2"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.js": "eslint --cache --fix",
-    "*.{js,jsx,ts,tsx,json,md}": "prettier --write"
-  }
+	"name": "hi",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"dev": "next dev",
+		"build": "next build",
+		"start": "next start",
+		"lint": "next lint"
+	},
+	"dependencies": {
+		"next": "11.1.2",
+		"react": "17.0.2",
+		"react-dom": "17.0.2"
+	},
+	"devDependencies": {
+		"@types/react": "17.0.20",
+		"@typescript-eslint/eslint-plugin": "^4.31.0",
+		"@typescript-eslint/parser": "^4.31.0",
+		"eslint": "^7.32.0",
+		"eslint-config-next": "11.1.2",
+		"eslint-config-prettier": "^8.3.0",
+		"eslint-config-standard": "^16.0.3",
+		"eslint-plugin-react": "^7.25.1",
+		"husky": "^7.0.0",
+		"lint-staged": "^11.1.2",
+		"prettier": "^2.4.0",
+		"typescript": "4.4.2"
+	}
 }
