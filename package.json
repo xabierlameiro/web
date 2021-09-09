@@ -7,7 +7,7 @@
 		"build": "next build",
 		"start": "next start",
 		"lint": "next lint",
-		"test": "jest"
+		"test": "jest --coverage"
 	},
 	"dependencies": {
 		"next": "11.1.2",
@@ -47,6 +47,17 @@
 		"rootDir": ".",
 		"moduleNameMapper": {
 			"test-utils": "<rootDir>/test-utils"
+		},
+		"collectCoverageFrom": [
+			"<rootDir>/**/*.tsx"
+		],
+		"coverageThreshold": {
+			"global": {
+				"branches": 100,
+				"functions": 100,
+				"lines": 100,
+				"statements": 100
+			}
 		}
 	},
 	"babel": {
