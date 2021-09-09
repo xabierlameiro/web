@@ -6,7 +6,8 @@
 		"dev": "next dev",
 		"build": "next build",
 		"start": "next start",
-		"lint": "next lint"
+		"lint": "next lint",
+		"test": "mocha"
 	},
 	"dependencies": {
 		"next": "11.1.2",
@@ -14,6 +15,8 @@
 		"react-dom": "17.0.2"
 	},
 	"devDependencies": {
+		"@testing-library/react": "^12.0.0",
+		"@types/mocha": "^9.0.0",
 		"@types/react": "17.0.20",
 		"@typescript-eslint/eslint-plugin": "^4.31.0",
 		"@typescript-eslint/parser": "^4.31.0",
@@ -21,9 +24,14 @@
 		"eslint-config-next": "11.1.2",
 		"eslint-config-prettier": "^8.3.0",
 		"eslint-config-standard": "^16.0.3",
+		"eslint-plugin-node": "^11.1.0",
+		"eslint-plugin-promise": "^5.1.0",
 		"eslint-plugin-react": "^7.25.1",
+		"global-jsdom": "^8.2.0",
 		"husky": "^7.0.0",
+		"jsdom": "^17.0.0",
 		"lint-staged": "^11.1.2",
+		"mocha": "^9.1.1",
 		"prettier": "^2.4.0",
 		"typescript": "4.4.2"
 	}
