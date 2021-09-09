@@ -43,7 +43,11 @@
 		"typescript": "4.4.2"
 	},
 	"jest": {
-		"testEnvironment": "jsdom"
+		"testEnvironment": "jsdom",
+		"rootDir": ".",
+		"moduleNameMapper": {
+			"test-utils": "<rootDir>/test-utils"
+		}
 	},
 	"babel": {
 		"presets": [

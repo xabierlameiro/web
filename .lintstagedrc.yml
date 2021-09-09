@@ -1,6 +1,6 @@
 ---
-'**/*.{js,jsx,ts,tsx}':
-  - eslint --config '.eslintrc.yml' --fix
-
 '**/*.{js,jsx,ts,tsx,json,html,md,css,scss,yaml,yml}':
   - prettier --config '.prettierrc.yml' --write
+
+'**/*.{js,jsx,ts,tsx}':
+  - eslint --config '.eslintrc.yml' --fix

@@ -1,4 +1,4 @@
-import { render, screen } from '../../test-utils'
+import { render, screen } from 'test-utils'
 import Home from '../index'
 
 test('renders a message', () => {

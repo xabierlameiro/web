@@ -13,11 +13,11 @@
 		"moduleResolution": "node",
 		"resolveJsonModule": true,
 		"isolatedModules": true,
-		"jsx": "preserve"
-		// "baseUrl": "./",
-		// "paths": {
-		// 	"test-utils": ["./test-utils"]
-		// }
+		"jsx": "preserve",
+		"baseUrl": "./",
+		"paths": {
+			"test-utils": ["./test-utils"]
+		}
 	},
 	"include": ["./"],
 	"exclude": ["node_modules"]
