@@ -1,8 +1,14 @@
-import { render, screen } from 'test-utils'
+import { render, screen, fireEvent } from 'test-utils'
 import Home from '../index'
 
-test('renders a message', () => {
-	const { debug, container } = render(<Home />)
-	// debug()
-	screen.getByText('Web personal')
+describe('Testing Home page', () => {
+	it('The button is renderer', async () => {
+		render(<Home />)
+		screen.getByText('HOLA')
+		const button = screen.getByRole('button')
+		expect(button).toBeInTheDocument()
+		fireEvent.click(button)
+		screen.getByText('MUNDO')
+		screen.debug()
+	})
 })

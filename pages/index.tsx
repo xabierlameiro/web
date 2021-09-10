@@ -1,14 +1,13 @@
 import type { NextPage } from 'next'
+import { useState } from 'react'
 
 const Home: NextPage = (): JSX.Element => {
-	const bla =
-		() =>
-		(e: React.MouseEventHandler<HTMLButtonElement>): React.MouseEventHandler<HTMLButtonElement> => {
-			return e
-		}
+	const [message, setMessage] = useState('HOLA')
+	const bla = () => setMessage('MUNDO')
 	return (
 		<h1>
-			Web personal<button onClick={bla}></button>
+			{message}
+			<button onClick={bla}>Button</button>
 		</h1>
 	)
 }

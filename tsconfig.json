@@ -16,7 +16,7 @@
 		"jsx": "preserve",
 		"baseUrl": "./",
 		"paths": {
-			"test-utils": ["./test-utils"]
+			"test-utils": ["configs/test-utils"]
 		}
 	},
 	"include": ["./"],
