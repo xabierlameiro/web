@@ -1,15 +1,20 @@
-import type { NextPage } from 'next'
-import { useState } from 'react'
-
-const Home: NextPage = (): JSX.Element => {
-	const [message, setMessage] = useState('HOLA')
-	const bla = () => setMessage('MUNDO')
+import React from 'react'
+import { useAuthUser, withAuthUser, withAuthUserTokenSSR } from 'next-firebase-auth'
+import { signIn, signOut } from '../configs/firebase'
+const Demo = () => {
+	const AuthUser = useAuthUser()
+	const bla = () => signIn()
+	const ble = () => signOut()
 	return (
-		<h1>
-			{message}
-			<button onClick={bla}>Button</button>
-		</h1>
+		<div>
+			<p>Your email is {AuthUser.email ? AuthUser.email : 'unknown'}.</p>
+			<button onClick={bla}>Login</button>
+			<button onClick={ble}>Logout</button>
+		</div>
 	)
 }
 
-export default Home
+// Note that this is a higher-order function.
+export const getServerSideProps = withAuthUserTokenSSR()()
+
+export default withAuthUser()(Demo)

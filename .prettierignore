@@ -3,3 +3,6 @@ test-utils/index.tsx
 .husky
 .next
 .vscode
+coverage
+.env.local
+.eslintrc.yml

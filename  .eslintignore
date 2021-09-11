@@ -2,4 +2,8 @@ node_modules/*
 test-utils/index.tsx
 .husky
 .next
-.vscode 
+.vscode
+coverage
+next.config.js
+.env.local
+.eslintrc.*

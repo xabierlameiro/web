@@ -25,3 +25,11 @@ rules:
 settings:
   react:
     version: 'detect'
+overrides:
+  - files:
+  - src/**/*.js
+    excludedFiles:
+      - test/*.js
+      - ./**/*.spec.js
+      - .eslintrc.yml
+ 
