@@ -1,20 +1,22 @@
 import React from 'react'
-import { useAuthUser, withAuthUser, withAuthUserTokenSSR } from 'next-firebase-auth'
-import { signIn, signOut } from '../configs/firebase'
+import { useAuthUser, withAuthUser, withAuthUserTokenSSR, AuthAction } from 'next-firebase-auth'
+import { signOut } from '../configs/firebase'
+
 const Demo = () => {
-	const AuthUser = useAuthUser()
-	const bla = () => signIn()
-	const ble = () => signOut()
+	const user = useAuthUser()
 	return (
 		<div>
-			<p>Your email is {AuthUser.email ? AuthUser.email : 'unknown'}.</p>
-			<button onClick={bla}>Login</button>
-			<button onClick={ble}>Logout</button>
+			<p>uid : {user.id}</p>
+			<p>name : {user.displayName}</p>
+			<img src={user.photoURL} alt={user.displayName} />
+			<br />
+			<button onClick={() => signOut()}>Logout</button>
 		</div>
 	)
 }
 
-// Note that this is a higher-order function.
-export const getServerSideProps = withAuthUserTokenSSR()()
+export const getServerSideProps = withAuthUserTokenSSR({
+	whenUnauthed: AuthAction.REDIRECT_TO_LOGIN,
+})()
 
-export default withAuthUser()(Demo)
+export default withAuthUser({ whenUnauthedAfterInit: AuthAction.REDIRECT_TO_LOGIN })(Demo)

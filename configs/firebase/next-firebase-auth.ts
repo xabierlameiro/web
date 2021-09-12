@@ -2,7 +2,7 @@ import { init } from 'next-firebase-auth'
 
 const initAuth = () => {
 	init({
-		authPageURL: '/auth',
+		authPageURL: '/login',
 		appPageURL: '/',
 		loginAPIEndpoint: '/api/login', // required
 		logoutAPIEndpoint: '/api/logout', // required
@@ -30,7 +30,7 @@ const initAuth = () => {
 			// The keys cannot be accessible on the client side.
 			keys: [process.env.COOKIE_SECRET_CURRENT, process.env.COOKIE_SECRET_PREVIOUS],
 			httpOnly: true,
-			maxAge: 12 * 60 * 60 * 24 * 1000, // twelve days
+			maxAge: 1 * 60 * 60 * 24 * 1000, // twelve days
 			overwrite: true,
 			path: '/',
 			sameSite: 'strict',
