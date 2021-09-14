@@ -1,15 +1,28 @@
 import { useEffect, useState } from 'react'
 import { useAuthUser, withAuthUser, withAuthUserTokenSSR, AuthAction } from 'next-firebase-auth'
 import { hasUserLoggedIn, getDateFromFirestore } from 'utils/date'
-import { userList, signOut } from 'utils/db'
+import { signOut } from 'utils/db'
 import Image from 'next/image'
+import dynamic from 'next/dynamic'
+import { db } from 'configs/firebase'
+
+const DynamicComponentWithNoSSR = dynamic(() => import('../components/Map'), {
+	ssr: false,
+	loading: () => <p>Loading...</p>,
+})
 
 const Index = () => {
 	const user = useAuthUser()
 	const [users, setUsers] = useState([])
 
 	useEffect(() => {
-		setUsers(userList())
+		db.collection('users').onSnapshot((querySnapshot) => {
+			const docs = []
+			querySnapshot.forEach((doc) => {
+				docs.push(doc.data())
+			})
+			setUsers(docs)
+		})
 		return () => {
 			setUsers([])
 		}
@@ -30,6 +43,7 @@ const Index = () => {
 					{hasUserLoggedIn(user.login.toDate().getTime())}
 				</p>
 			))}
+			<DynamicComponentWithNoSSR />
 		</div>
 	)
 }

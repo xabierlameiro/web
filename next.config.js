@@ -3,7 +3,10 @@ const os = require('os')
 /** @type {import('next').NextConfig} */
 
 module.exports = {
-	env: {},
+	env: {
+		mapbox_key:
+			'pk.eyJ1IjoieGxhbWVpcm8iLCJhIjoiY2t0a2c1cGx5MDVxeDJ1cHFmMjZoYnoyaSJ9.ooM903cpOLFn2qiTsJLBCA',
+	},
 	webpack: null,
 	webpackDevMiddleware: null,
 	eslint: {

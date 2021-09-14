@@ -11,7 +11,7 @@ const queryClient = new QueryClient()
 
 initAuth()
 
-const App = ({ Component, pageProps }: AppProps): JSX.Element => {
+const App = ({ Component, pageProps }: AppProps) => {
 	const user = useAuthUser()
 	useSessionManagment(user)
 

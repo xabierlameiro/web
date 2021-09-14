@@ -45,6 +45,15 @@ export const signInWithGoogle = (): Promise<void> =>
 			throw new Error(`Error al iniciar sesión ${error}`)
 		})
 
+export const signInWithGitHub = (): Promise<void> =>
+	firebase
+		.auth()
+		.signInWithPopup(new firebase.auth.GithubAuthProvider())
+		.then(({ user }) => updateUser(user))
+		.catch((error) => {
+			throw new Error(`Error al iniciar sesión ${error}`)
+		})
+
 export const signOut = (): Promise<void> =>
 	firebase
 		.auth()
