@@ -1,29 +1,15 @@
-import firebase from 'firebase/app'
 import { AuthUserContext } from 'next-firebase-auth'
 import { useState, useEffect } from 'react'
-import { db } from '../configs/firebase'
+import { updateLogin } from 'utils/db'
 
 const useSessionManagment = (user: AuthUserContext): void => {
 	const [intervalId, setInternalId] = useState(null)
-
 	useEffect(() => {
 		if (!intervalId && user?.emailVerified) {
-			const collection = db.collection('users').doc(user.id)
-			let now = new Date()
-			now.setMinutes(now.getMinutes() + 1)
-			now = new Date(now)
-
-			collection.update({ login: firebase.firestore.Timestamp.fromDate(now) }).catch(() => {
-				throw new Error('Fallo al actualizar el documento')
-			})
+			updateLogin(user.id)
 			setInternalId(
 				setInterval(() => {
-					let now = new Date()
-					now.setMinutes(now.getMinutes() + 1)
-					now = new Date(now)
-					collection.update({ login: firebase.firestore.Timestamp.fromDate(now) }).catch(() => {
-						throw new Error('Fallo al actualizar el documento')
-					})
+					updateLogin(user.id)
 				}, 60000)
 			)
 		}
@@ -32,11 +18,7 @@ const useSessionManagment = (user: AuthUserContext): void => {
 			clearInterval(intervalId)
 			setInternalId(null)
 		}
-
-		return () => {
-			setInternalId(null) // This worked for me
-		}
-	}, [user])
+	}, [user, intervalId])
 }
 
 export { useSessionManagment }

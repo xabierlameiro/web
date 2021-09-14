@@ -1,20 +1,15 @@
 import { useEffect, useState } from 'react'
 import { useAuthUser, withAuthUser, withAuthUserTokenSSR, AuthAction } from 'next-firebase-auth'
-import { db, signOut } from '../configs/firebase'
+import { hasUserLoggedIn, getDateFromFirestore } from 'utils/date'
+import { userList, signOut } from 'utils/db'
 import Image from 'next/image'
 
-const Demo = () => {
+const Index = () => {
 	const user = useAuthUser()
 	const [users, setUsers] = useState([])
 
 	useEffect(() => {
-		db.collection('users').onSnapshot((querySnapshot) => {
-			const docs = []
-			querySnapshot.forEach((doc) => {
-				docs.push(doc.data())
-			})
-			setUsers(docs)
-		})
+		setUsers(userList())
 		return () => {
 			setUsers([])
 		}
@@ -29,8 +24,11 @@ const Demo = () => {
 			)}
 			<br />
 			<button onClick={() => signOut()}>Logout</button>
-			{users.map((user) => (
-				<p key={user.uid}>{user.login.toDate().toLocaleTimeString('es')}</p>
+			{users?.map((user) => (
+				<p key={user.uid}>
+					{getDateFromFirestore(user.login.seconds)}
+					{hasUserLoggedIn(user.login.toDate().getTime())}
+				</p>
 			))}
 		</div>
 	)
@@ -40,4 +38,4 @@ export const getServerSideProps = withAuthUserTokenSSR({
 	whenUnauthed: AuthAction.REDIRECT_TO_LOGIN,
 })()
 
-export default withAuthUser({ whenUnauthedAfterInit: AuthAction.REDIRECT_TO_LOGIN })(Demo)
+export default withAuthUser({ whenUnauthedAfterInit: AuthAction.REDIRECT_TO_LOGIN })(Index)

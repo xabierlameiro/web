@@ -1,6 +1,6 @@
 import { init } from 'next-firebase-auth'
 
-const initAuth = () => {
+const initAuth = (): void => {
 	init({
 		authPageURL: '/login',
 		appPageURL: '/',

@@ -1,9 +1,8 @@
-import React from 'react'
 import { withAuthUser, withAuthUserTokenSSR, AuthAction } from 'next-firebase-auth'
-import { signIn } from '../configs/firebase'
+import { signInWithGoogle } from 'utils/db'
 
 const Login = () => {
-	const bla = () => signIn()
+	const bla = () => signInWithGoogle()
 
 	return (
 		<div>
@@ -11,8 +10,6 @@ const Login = () => {
 		</div>
 	)
 }
-
-// Note that this is a higher-order function.
 
 export const getServerSideProps = withAuthUserTokenSSR({
 	whenAuthed: AuthAction.REDIRECT_TO_APP,
