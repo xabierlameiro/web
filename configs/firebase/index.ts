@@ -1,4 +1,5 @@
 import firebase from 'firebase/app'
+import 'firebase/firestore'
 
 if (!firebase.apps.length) {
 	firebase.initializeApp({
@@ -15,17 +16,39 @@ if (!firebase.apps.length) {
 	firebase.app()
 }
 
-var provider = new firebase.auth.GoogleAuthProvider()
+const provider = new firebase.auth.GoogleAuthProvider()
+
 firebase.auth().languageCode = 'es'
 
-export const signIn = () =>
+if (typeof window !== 'undefined') {
+	firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+}
+
+export const db = firebase.firestore()
+
+export const signIn = (): Promise<void> =>
 	firebase
 		.auth()
 		.signInWithPopup(provider)
-		.then((result) => {
-			console.log('OK', result)
+		.then(({ user }) => {
+			db.collection('users')
+				.doc(user.uid)
+				.set({
+					uid: user.uid,
+					name: user.displayName,
+					photoURL: user.photoURL,
+					email: user.email,
+					login: firebase.firestore.Timestamp.fromDate(new Date()),
+				})
+				.then((e) => {
+					console.log('Document successfully written!', e)
+				})
+				.catch((error) => {
+					console.error('Error adding document: ', error)
+				})
 		})
 		.catch((error) => {
 			console.log('KO', error)
 		})
-export const signOut = () => firebase.auth().signOut()
+
+export const signOut = (): Promise<void> => firebase.auth().signOut()

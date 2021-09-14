@@ -29,7 +29,7 @@ module.exports = {
 		imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
 		path: '/_next/image',
 		loader: 'default',
-		domains: [],
+		domains: ['lh3.googleusercontent.com'],
 		disableStaticImages: false,
 		minimumCacheTTL: 60,
 	},
@@ -92,5 +92,23 @@ module.exports = {
 	},
 	future: {
 		strictPostcssConfiguration: false,
+	},
+
+	async headers() {
+		return [
+			{
+				source: '/api',
+				headers: [
+					{
+						key: 'Set-Cookie',
+						value: 'cross-site-cookie=whatever; SameSite=None; Secure',
+					},
+					{
+						key: 'Hola',
+						value: 'Mundo',
+					},
+				],
+			},
+		]
 	},
 }
