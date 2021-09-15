@@ -1,5 +1,4 @@
 node_modules/*
-test-utils/index.tsx
 .husky
 .next
 .vscode

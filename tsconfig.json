@@ -16,7 +16,6 @@
 		"jsx": "preserve",
 		"baseUrl": "./",
 		"paths": {
-			"test-utils": ["configs/test-utils"],
 			"firebase": ["configs/firebase"],
 			"utils": ["utils"],
 			"hooks": ["hooks"]

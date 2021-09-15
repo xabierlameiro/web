@@ -25,6 +25,4 @@ rules:
 settings:
   react:
     version: 'detect'
-overrides:
-  - files: ['src/**/*.js']
-    excludedFiles: ['node_modules,test/*.js', './**/*.spec.js', '.eslintrc.yml']
+
