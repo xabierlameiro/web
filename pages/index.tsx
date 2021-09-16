@@ -3,13 +3,9 @@ import { useAuthUser, withAuthUser, withAuthUserTokenSSR, AuthAction } from 'nex
 import { hasUserLoggedIn, getDateFromFirestore } from '@/utils/date'
 import { signOut } from '@/utils/db'
 import Image from 'next/image'
-import dynamic from 'next/dynamic'
+import Map from '@/components/Map'
 import { db } from '@/firebase'
-
-const DynamicComponentWithNoSSR = dynamic(() => import('../components/Map'), {
-	ssr: false,
-	loading: () => <p>Loading...</p>,
-})
+import { CoffeeLoading } from 'react-loadingg'
 
 const Index = () => {
 	const user = useAuthUser()
@@ -43,13 +39,17 @@ const Index = () => {
 					{hasUserLoggedIn(user.login.toDate().getTime())}
 				</p>
 			))}
-			<DynamicComponentWithNoSSR />
+			<Map />
 		</div>
 	)
 }
 
+export default withAuthUser({
+	whenUnauthedAfterInit: AuthAction.REDIRECT_TO_LOGIN,
+	whenUnauthedBeforeInit: AuthAction.SHOW_LOADER,
+	LoaderComponent: () => <CoffeeLoading />,
+})(Index)
+
 export const getServerSideProps = withAuthUserTokenSSR({
 	whenUnauthed: AuthAction.REDIRECT_TO_LOGIN,
 })()
-
-export default withAuthUser({ whenUnauthedAfterInit: AuthAction.REDIRECT_TO_LOGIN })(Index)

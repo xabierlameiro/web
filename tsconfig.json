@@ -19,7 +19,8 @@
 			"@/firebase": ["configs/firebase/"],
 			"@/hooks/*": ["hooks/*"],
 			"@/utils/*": ["utils/*"],
-			"@/configs/*": ["configs/*"]
+			"@/configs/*": ["configs/*"],
+			"@/components/*": ["components/*"]
 		}
 	},
 	"include": ["."],

@@ -16,6 +16,7 @@ module.exports = {
 		'^@/utils(.*)$': '<rootDir>/utils$1',
 		'^@/hooks(.*)$': '<rootDir>/hooks$1',
 		'^@/firebase(.*)$': '<rootDir>/configs/firebase/',
+		'^@/components(.*)$': '<rootDir>/components$1',
 	},
 	testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/.next/'],
 	testEnvironment: 'jsdom',

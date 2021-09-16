@@ -1,6 +1,9 @@
-import ReactMapGL from 'react-map-gl'
 import { useState } from 'react'
 import 'mapbox-gl/dist/mapbox-gl.css'
+import dynamic from 'next/dynamic'
+import { CoffeeLoading } from 'react-loadingg'
+
+const ReactMap = dynamic(() => import('react-map-gl'), { loading: () => <CoffeeLoading /> })
 
 const Map = (): JSX.Element => {
 	const [viewport, setViewport] = useState({
@@ -10,7 +13,7 @@ const Map = (): JSX.Element => {
 	})
 
 	return (
-		<ReactMapGL
+		<ReactMap
 			{...viewport}
 			width='100vw'
 			height='100vh'
