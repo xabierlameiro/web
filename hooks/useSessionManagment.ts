@@ -1,6 +1,6 @@
 import { AuthUserContext } from 'next-firebase-auth'
 import { useState, useEffect } from 'react'
-import { updateLogin } from 'utils/db'
+import { updateLogin } from '@/utils/db'
 
 const useSessionManagment = (user: AuthUserContext): void => {
 	const [intervalId, setInternalId] = useState(null)

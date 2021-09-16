@@ -14,13 +14,14 @@
 		"resolveJsonModule": true,
 		"isolatedModules": true,
 		"jsx": "preserve",
-		"baseUrl": "./",
+		"baseUrl": ".",
 		"paths": {
-			"firebase": ["configs/firebase"],
-			"utils": ["utils"],
-			"hooks": ["hooks"]
+			"@/firebase": ["configs/firebase/"],
+			"@/hooks/*": ["hooks/*"],
+			"@/utils/*": ["utils/*"],
+			"@/configs/*": ["configs/*"]
 		}
 	},
-	"include": ["./"],
+	"include": ["."],
 	"exclude": ["node_modules"]
 }

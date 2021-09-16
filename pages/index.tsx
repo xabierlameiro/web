@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 import { useAuthUser, withAuthUser, withAuthUserTokenSSR, AuthAction } from 'next-firebase-auth'
-import { hasUserLoggedIn, getDateFromFirestore } from 'utils/date'
-import { signOut } from 'utils/db'
+import { hasUserLoggedIn, getDateFromFirestore } from '@/utils/date'
+import { signOut } from '@/utils/db'
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
-import { db } from 'configs/firebase'
+import { db } from '@/firebase'
 
 const DynamicComponentWithNoSSR = dynamic(() => import('../components/Map'), {
 	ssr: false,

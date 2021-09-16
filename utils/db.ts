@@ -1,6 +1,6 @@
 import firebase from 'firebase/app'
-import { db } from 'configs/firebase'
 import { getDateWithExtraMinutes } from './date'
+import { db } from '@/firebase'
 
 export const updateLogin = (id: string): void => {
 	const collection = db.collection('users').doc(id)

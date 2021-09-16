@@ -3,9 +3,9 @@ import type { AppProps } from 'next/app'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
 import { withAuthUser, useAuthUser } from 'next-firebase-auth'
-import { useSessionManagment } from '../hooks/useSessionManagment'
+import { useSessionManagment } from '@/hooks/useSessionManagment'
 
-import initAuth from 'configs/firebase/next-firebase-auth'
+import initAuth from '@/configs/firebase/next-firebase-auth'
 
 const queryClient = new QueryClient()
 

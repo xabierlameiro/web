@@ -19,7 +19,13 @@ if (!firebase.apps.length) {
 firebase.auth().languageCode = 'es'
 
 if (typeof window !== 'undefined') {
-	firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+	firebase
+		.auth()
+		.setPersistence(
+			process.env.NODE_ENV === 'test'
+				? firebase.auth.Auth.Persistence.NONE
+				: firebase.auth.Auth.Persistence.SESSION
+		)
 }
 
 export const db = firebase.firestore()
