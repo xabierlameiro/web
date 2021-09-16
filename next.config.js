@@ -10,10 +10,10 @@ module.exports = {
 	webpack: null,
 	webpackDevMiddleware: null,
 	eslint: {
-		ignoreDuringBuilds: false,
+		ignoreDuringBuilds: true,
 	},
 	typescript: {
-		ignoreBuildErrors: false,
+		ignoreBuildErrors: true,
 	},
 	distDir: '.next',
 	cleanDistDir: true,
