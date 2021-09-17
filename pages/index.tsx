@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useAuthUser, withAuthUser, withAuthUserTokenSSR, AuthAction } from 'next-firebase-auth'
 import { hasUserLoggedIn, getDateFromFirestore } from '@/utils/date'
-import { signOut } from '@/utils/db'
+import { signOut } from '@/utils/auth'
 import Image from 'next/image'
 import Map from '@/components/Map'
 import { db } from '@/firebase'

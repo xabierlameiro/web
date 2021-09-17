@@ -1,16 +1,40 @@
 import { withAuthUser, withAuthUserTokenSSR, AuthAction } from 'next-firebase-auth'
-import { signInWithGoogle, signInWithGitHub } from 'utils/db'
+import { signInWithGoogle, signInWithGitHub } from '@/utils/auth'
 import { CoffeeLoading } from 'react-loadingg'
+import { ErrorBoundary, useErrorHandler } from 'react-error-boundary'
+import { useState } from 'react'
 
-const Login = () => {
-	const bla = () => signInWithGoogle()
-	const ble = () => signInWithGitHub()
-
+const Buttons = () => {
+	const handleError = useErrorHandler()
+	const bla = () => signInWithGoogle().catch(handleError)
+	const ble = () => signInWithGitHub().catch(handleError)
 	return (
-		<div>
+		<>
 			<button onClick={bla}>Login</button>
 			<button onClick={ble}>Login Github</button>
-		</div>
+		</>
+	)
+}
+function ErrorFallback({ error }) {
+	const [open, setDialog] = useState(true)
+	return (
+		<>
+			<dialog open={open}>
+				<p>Something went wrong:</p>
+				<p style={{ color: 'red' }}>{error.message}</p>
+				<button onClick={() => setDialog(!open)}>exit</button>
+			</dialog>
+			<Buttons />
+		</>
+	)
+}
+const Login = () => {
+	return (
+		<ErrorBoundary FallbackComponent={ErrorFallback}>
+			<Buttons />
+			<h1>hola</h1>
+			<h1>mundo</h1>
+		</ErrorBoundary>
 	)
 }
 

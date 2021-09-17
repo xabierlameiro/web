@@ -1,15 +1,15 @@
-import { AuthUserContext } from 'next-firebase-auth'
 import { useState, useEffect } from 'react'
-import { updateLogin } from '@/utils/db'
+import { AuthUserContext } from 'next-firebase-auth'
+import { updateSession } from '@/utils/db'
 
 const useSessionManagment = (user: AuthUserContext): void => {
 	const [intervalId, setInternalId] = useState(null)
 	useEffect(() => {
 		if (!intervalId && user?.emailVerified) {
-			updateLogin(user.id)
+			updateSession(user.id)
 			setInternalId(
 				setInterval(() => {
-					updateLogin(user.id)
+					updateSession(user.id)
 				}, 60000)
 			)
 		}
