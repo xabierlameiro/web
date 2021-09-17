@@ -1,5 +1,5 @@
 import firebase from 'firebase/app'
-import { updateUser } from './db'
+import { updateUser } from '@/utils/db'
 
 export const signInWithGoogle = (): Promise<boolean | void | Error> =>
 	new Promise((resolve, reject) => {

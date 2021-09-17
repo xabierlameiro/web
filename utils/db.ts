@@ -1,5 +1,5 @@
 import firebase from 'firebase/app'
-import { getDateWithExtraMinutes } from './date'
+import { getDateWithExtraMinutes } from '@/utils/date'
 import { db } from '@/firebase'
 
 export const updateSession = (id: string): void => {

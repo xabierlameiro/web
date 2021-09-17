@@ -1,21 +1,24 @@
-import type { FC } from 'react'
 import type { AppProps } from 'next/app'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
 import { withAuthUser, useAuthUser } from 'next-firebase-auth'
 import { useSessionManagment } from '@/hooks/useSessionManagment'
-
 import initAuth from '@/configs/firebase/next-firebase-auth'
 
+import type { Page } from '../types/page'
+type Props = AppProps & {
+	Component: Page
+}
 const queryClient = new QueryClient()
 
 initAuth()
 
-const App: FC<AppProps> = ({ Component, pageProps }: AppProps): JSX.Element => {
+const App: React.FC<AppProps> = ({ Component, pageProps }: Props): JSX.Element => {
 	const user = useAuthUser()
 	useSessionManagment(user)
+	const getLayout = Component.getLayout || ((page) => page)
 
-	return (
+	return getLayout(
 		<QueryClientProvider client={queryClient}>
 			<Component {...pageProps} />
 			<ReactQueryDevtools initialIsOpen={false} />

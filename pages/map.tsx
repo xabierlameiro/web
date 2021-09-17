@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react'
-// import { useAuthUser } from 'next-firebase-auth'
+import { useAuthUser, withAuthUser, withAuthUserTokenSSR, AuthAction } from 'next-firebase-auth'
 import { hasUserLoggedIn, getDateFromFirestore } from '@/utils/date'
-// import { signOut } from '@/utils/auth'
-// import Image from 'next/image'
+import { signOut } from '@/utils/auth'
+import Image from 'next/image'
+import Map from '@/components/Map'
 import { db } from '@/firebase'
-import Layout from '@/components/Layout'
+import { CoffeeLoading } from 'react-loadingg'
 
-const Index = (): JSX.Element => {
-	// const user = useAuthUser()
+const Index = () => {
+	const user = useAuthUser()
 	const [users, setUsers] = useState([])
 
 	useEffect(() => {
@@ -25,25 +26,30 @@ const Index = (): JSX.Element => {
 
 	return (
 		<div>
-			{/* <p>uid : {user.id}</p>
+			<p>uid : {user.id}</p>
 			<p>name : {user.displayName}</p>
 			{user.photoURL && (
 				<Image src={user.photoURL} alt={user.displayName} width='200px' height='200px' />
 			)}
 			<br />
-			<button onClick={() => signOut()}>Logout</button> */}
+			<button onClick={() => signOut()}>Logout</button>
 			{users?.map((user) => (
 				<p key={user.uid}>
 					{getDateFromFirestore(user.login.seconds)}
 					{hasUserLoggedIn(user.login.toDate().getTime())}
 				</p>
 			))}
+			<Map />
 		</div>
 	)
 }
 
-Index.getLayout = function getLayout(page) {
-	return <Layout>{page}</Layout>
-}
+export default withAuthUser({
+	whenUnauthedAfterInit: AuthAction.REDIRECT_TO_LOGIN,
+	whenUnauthedBeforeInit: AuthAction.SHOW_LOADER,
+	LoaderComponent: () => <CoffeeLoading />,
+})(Index)
 
-export default Index
+export const getServerSideProps = withAuthUserTokenSSR({
+	whenUnauthed: AuthAction.REDIRECT_TO_LOGIN,
+})()

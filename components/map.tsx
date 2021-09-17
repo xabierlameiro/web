@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import 'mapbox-gl/dist/mapbox-gl.css'
-import dynamic from 'next/dynamic'
 import { CoffeeLoading } from 'react-loadingg'
+import dynamic from 'next/dynamic'
+import 'mapbox-gl/dist/mapbox-gl.css'
 
 const ReactMap = dynamic(() => import('react-map-gl'), { loading: () => <CoffeeLoading /> })
 
