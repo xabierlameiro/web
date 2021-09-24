@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { useAuthUser, withAuthUser, withAuthUserTokenSSR, AuthAction } from 'next-firebase-auth'
-import { hasUserLoggedIn, getDateFromFirestore } from '@/utils/date'
 import { signOut } from '@/utils/auth'
 import Image from 'next/image'
 import Map from '@/components/Map'
@@ -32,12 +31,9 @@ const Index = () => {
 				<Image src={user.photoURL} alt={user.displayName} width='200px' height='200px' />
 			)}
 			<br />
-			<button onClick={() => signOut()}>Logout</button>
+			<button onClick={() => signOut({ user })}>Logout</button>
 			{users?.map((user) => (
-				<p key={user.uid}>
-					{getDateFromFirestore(user.login.seconds)}
-					{hasUserLoggedIn(user.login.toDate().getTime())}
-				</p>
+				<p key={user.uid}>{`login : ${user.logged}`}</p>
 			))}
 			<Map />
 		</div>

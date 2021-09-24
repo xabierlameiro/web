@@ -1,15 +1,6 @@
 import firebase from 'firebase/app'
-import { getDateWithExtraMinutes } from '@/utils/date'
 import { db } from '@/firebase'
-
-export const updateSession = (id: string): void => {
-	const collection = db.collection('users').doc(id)
-	collection
-		.update({ login: firebase.firestore.Timestamp.fromDate(getDateWithExtraMinutes(1)) })
-		.catch(() => {
-			throw new Error('Fallo al actualizar el documento')
-		})
-}
+import { AuthUser } from 'next-firebase-auth'
 
 export const userList = (): firebase.User[] => {
 	const docs = []
@@ -29,7 +20,18 @@ export const updateUser = (user: firebase.User): void => {
 			name: user.displayName,
 			photoURL: user.photoURL,
 			email: user.email,
-			login: firebase.firestore.Timestamp.fromDate(new Date()),
+			logged: true,
+		})
+		.catch((error) => {
+			throw new Error(`Error al añadir el documento ${error}`)
+		})
+}
+
+export const logoutUser = ({ user }: { user: AuthUser }): void => {
+	db.collection('users')
+		.doc(user.id)
+		.update({
+			logged: false,
 		})
 		.catch((error) => {
 			throw new Error(`Error al añadir el documento ${error}`)

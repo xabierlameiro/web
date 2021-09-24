@@ -1,24 +1,14 @@
-import { useState, useEffect } from 'react'
-import { AuthUserContext } from 'next-firebase-auth'
-import { updateSession } from '@/utils/db'
+import { useAuthUser } from 'next-firebase-auth'
+import { logoutUser } from '@/utils/db'
 
-const useSessionManagment = (user: AuthUserContext): void => {
-	const [intervalId, setInternalId] = useState(null)
-	useEffect(() => {
-		if (!intervalId && user?.emailVerified) {
-			updateSession(user.id)
-			setInternalId(
-				setInterval(() => {
-					updateSession(user.id)
-				}, 60000)
-			)
-		}
+const useSessionManagment = (): void => {
+	const user = useAuthUser()
 
-		if (!user?.emailVerified) {
-			clearInterval(intervalId)
-			setInternalId(null)
+	if (process.browser) {
+		window.onbeforeunload = () => {
+			logoutUser({ user })
 		}
-	}, [user, intervalId])
+	}
 }
 
 export { useSessionManagment }
