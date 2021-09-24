@@ -15,12 +15,16 @@ const NavBar = (): JSX.Element => {
 				</li>
 			</ul>
 			<ul>
-				<li>
-					<button onClick={() => signInWithGoogle()}>Login</button>
-				</li>
-				<li>
-					<button onClick={() => signInWithGitHub()}>Login Github</button>
-				</li>
+				{!user.id && (
+					<li>
+						<button onClick={() => signInWithGoogle()}>Login</button>
+					</li>
+				)}
+				{!user.id && (
+					<li>
+						<button onClick={() => signInWithGitHub()}>Login Github</button>
+					</li>
+				)}
 				<li>
 					<button onClick={() => signOut({ user })}>Logout</button>
 				</li>

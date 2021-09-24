@@ -34,7 +34,7 @@ export const signOut = ({ user }: { user: AuthUser }): Promise<boolean | Error> 
 			.auth()
 			.signOut()
 			.then(() => {
-				logoutUser({ user })
+				if (user.id) logoutUser({ user })
 				resolve(true)
 			})
 			.catch((error) => {
