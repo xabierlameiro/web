@@ -1,6 +1,5 @@
 import firebase from 'firebase/app'
 import { db } from '@/firebase'
-import { AuthUser } from 'next-firebase-auth'
 
 export const userList = (): firebase.User[] => {
 	const docs = []
@@ -27,9 +26,9 @@ export const updateUser = (user: firebase.User): void => {
 		})
 }
 
-export const logoutUser = ({ user }: { user: AuthUser }): void => {
+export const logoutUser = (userId: string): void => {
 	db.collection('users')
-		.doc(user.id)
+		.doc(userId)
 		.update({
 			logged: false,
 		})

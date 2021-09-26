@@ -6,7 +6,7 @@ const useSessionManagment = (): void => {
 
 	if (process.browser) {
 		window.onbeforeunload = () => {
-			logoutUser({ user })
+			logoutUser(user.id)
 		}
 	}
 }

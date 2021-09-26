@@ -1,6 +1,5 @@
 import firebase from 'firebase/app'
 import { updateUser, logoutUser } from '@/utils/db'
-import { AuthUser } from 'next-firebase-auth'
 
 export const signIn = (
 	provider: firebase.auth.GoogleAuthProvider | firebase.auth.GithubAuthProvider
@@ -28,13 +27,13 @@ export const signInWithGoogle = (): Promise<boolean | void | Error> =>
 export const signInWithGitHub = (): Promise<boolean | void | Error> =>
 	signIn(new firebase.auth.GithubAuthProvider())
 
-export const signOut = ({ user }: { user: AuthUser }): Promise<boolean | Error> =>
+export const signOut = ({ user }: { user: firebase.User }): Promise<boolean | Error> =>
 	new Promise((resolve, reject) => {
 		firebase
 			.auth()
 			.signOut()
 			.then(() => {
-				if (user.id) logoutUser({ user })
+				if (user) logoutUser(user.uid)
 				resolve(true)
 			})
 			.catch((error) => {

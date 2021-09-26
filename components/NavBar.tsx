@@ -1,9 +1,9 @@
 import Link from 'next/link'
 import { signInWithGoogle, signInWithGitHub, signOut } from '@/utils/auth'
-import { useAuthUser } from 'next-firebase-auth'
+import firebase from 'firebase/app'
 
 const NavBar = (): JSX.Element => {
-	const user = useAuthUser()
+	const user = firebase.auth().currentUser
 	return (
 		<header>
 			<ul>
@@ -15,19 +15,21 @@ const NavBar = (): JSX.Element => {
 				</li>
 			</ul>
 			<ul>
-				{!user.id && (
+				{!user ? (
+					<>
+						<li>
+							<button onClick={() => signInWithGoogle()}>Login</button>
+						</li>
+
+						<li>
+							<button onClick={() => signInWithGitHub()}>Login Github</button>
+						</li>
+					</>
+				) : (
 					<li>
-						<button onClick={() => signInWithGoogle()}>Login</button>
+						<button onClick={() => signOut({ user })}>Logout</button>
 					</li>
 				)}
-				{!user.id && (
-					<li>
-						<button onClick={() => signInWithGitHub()}>Login Github</button>
-					</li>
-				)}
-				<li>
-					<button onClick={() => signOut({ user })}>Logout</button>
-				</li>
 			</ul>
 		</header>
 	)
