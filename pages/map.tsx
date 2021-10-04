@@ -1,13 +1,10 @@
 import { useEffect, useState } from 'react'
 import { useAuthUser, withAuthUser, withAuthUserTokenSSR, AuthAction } from 'next-firebase-auth'
-import { signOut } from '@/utils/auth'
-import Image from 'next/image'
-import Map from '@/components/Map'
+import { Map } from '@/components/Map'
 import { db } from '@/firebase'
 import { CoffeeLoading } from 'react-loadingg'
 
-const Index = () => {
-	const user = useAuthUser()
+const Index = (): JSX.Element => {
 	const [users, setUsers] = useState([])
 
 	useEffect(() => {
@@ -23,21 +20,9 @@ const Index = () => {
 		}
 	}, [])
 
-	return (
-		<div>
-			<p>uid : {user.id}</p>
-			<p>name : {user.displayName}</p>
-			{user.photoURL && (
-				<Image src={user.photoURL} alt={user.displayName} width='200px' height='200px' />
-			)}
-			<br />
-			<button onClick={() => signOut({ user })}>Logout</button>
-			{users?.map((user) => (
-				<p key={user.uid}>{`login : ${user.logged}`}</p>
-			))}
-			<Map />
-		</div>
-	)
+	console.log(users)
+
+	return <Map />
 }
 
 export default withAuthUser({
