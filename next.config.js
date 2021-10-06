@@ -6,6 +6,7 @@ module.exports = {
 	env: {
 		mapbox_key:
 			'pk.eyJ1IjoieGxhbWVpcm8iLCJhIjoiY2t0a2c1cGx5MDVxeDJ1cHFmMjZoYnoyaSJ9.ooM903cpOLFn2qiTsJLBCA',
+		mapbox_style: 'mapbox://styles/xlameiro/cktkh1izv83wa17p9p48odxgg',
 	},
 	webpack: null,
 	webpackDevMiddleware: null,

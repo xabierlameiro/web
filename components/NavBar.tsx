@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { signInWithGoogle, signInWithGitHub, signOut } from '@/utils/auth'
+import { signOut } from '@/utils/auth'
 import firebase from 'firebase/app'
 
 const NavBar = (): JSX.Element => {
@@ -13,21 +13,9 @@ const NavBar = (): JSX.Element => {
 				<li>
 					<Link href='/map'>Map</Link>
 				</li>
-			</ul>
-			<ul>
-				{!user ? (
-					<>
-						<li>
-							<button onClick={() => signInWithGoogle()}>Login</button>
-						</li>
-
-						<li>
-							<button onClick={() => signInWithGitHub()}>Login Github</button>
-						</li>
-					</>
-				) : (
+				{user && (
 					<li>
-						<button onClick={() => signOut({ user })}>Logout</button>
+						<a onClick={() => signOut({ user })}>Logout</a>
 					</li>
 				)}
 			</ul>

@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
-import { useAuthUser, withAuthUser, withAuthUserTokenSSR, AuthAction } from 'next-firebase-auth'
+import { withAuthUser, withAuthUserTokenSSR, AuthAction } from 'next-firebase-auth'
 import { Map } from '@/components/Map'
+import Layout from '@/components/Layout'
+
 import { db } from '@/firebase'
 import { CoffeeLoading } from 'react-loadingg'
 
@@ -20,9 +22,11 @@ const Index = (): JSX.Element => {
 		}
 	}, [])
 
-	console.log(users)
-
 	return <Map />
+}
+
+Index.getLayout = function getLayout(page) {
+	return <Layout>{page}</Layout>
 }
 
 export default withAuthUser({
