@@ -4,7 +4,7 @@ import 'firebase/firestore'
 if (!firebase.apps.length) {
 	firebase.initializeApp({
 		apiKey: 'AIzaSyAk24ODstuf6_xDsNRacVJrnKDa_5jWl7Y',
-		authDomain: 'weeb-cbe98.firebaseapp.com',
+		authDomain: 'auth.xabierlameiro.com',
 		databaseURL: 'https://weeb-cbe98-default-rtdb.europe-west1.firebasedatabase.app',
 		projectId: 'weeb-cbe98',
 		storageBucket: 'weeb-cbe98.appspot.com',
