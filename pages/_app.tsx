@@ -20,6 +20,19 @@ if (process.browser) {
 			logoutUser(uid)
 		}
 	}
+
+	const isOnIOS =
+		navigator.userAgent.match(/iPad/i) ||
+		navigator.userAgent.match(/iPhone/i) ||
+		navigator.userAgent.match(/android/i)
+	const eventName = isOnIOS ? 'pagehide' : 'beforeunload'
+
+	window.addEventListener(eventName, function () {
+		if (firebase.auth().currentUser) {
+			const { uid } = firebase.auth().currentUser
+			logoutUser(uid)
+		}
+	})
 }
 
 const App: React.FC<AppProps> = ({ Component, pageProps }: Props): JSX.Element => {
