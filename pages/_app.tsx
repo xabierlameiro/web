@@ -40,6 +40,26 @@ if (process.browser) {
 			logoutUser(uid)
 		}
 	}
+
+	let unloaded = false
+	window.addEventListener('beforeunload', function (e) {
+		if (unloaded) return
+		unloaded = true
+		if (firebase.auth().currentUser) {
+			const { uid } = firebase.auth().currentUser
+			logoutUser(uid)
+		}
+	})
+	window.addEventListener('visibilitychange', function (e) {
+		if (document.visibilityState === 'hidden') {
+			if (unloaded) return
+			unloaded = true
+			if (firebase.auth().currentUser) {
+				const { uid } = firebase.auth().currentUser
+				logoutUser(uid)
+			}
+		}
+	})
 }
 
 const App: React.FC<AppProps> = ({ Component, pageProps }: Props): JSX.Element => {
