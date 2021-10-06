@@ -14,6 +14,13 @@ type Props = AppProps & {
 initAuth()
 
 if (process.browser) {
+	window.onpageshow = function () {
+		if (firebase.auth().currentUser) {
+			const { uid } = firebase.auth().currentUser
+			logoutUser(uid)
+		}
+	}
+
 	window.onbeforeunload = () => {
 		if (firebase.auth().currentUser) {
 			const { uid } = firebase.auth().currentUser
