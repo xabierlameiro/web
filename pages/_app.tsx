@@ -33,6 +33,13 @@ if (process.browser) {
 			logoutUser(uid)
 		}
 	})
+
+	window.onunload = window.onbeforeunload = function () {
+		if (firebase.auth().currentUser) {
+			const { uid } = firebase.auth().currentUser
+			logoutUser(uid)
+		}
+	}
 }
 
 const App: React.FC<AppProps> = ({ Component, pageProps }: Props): JSX.Element => {
