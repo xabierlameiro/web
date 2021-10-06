@@ -39,6 +39,3 @@ yarn.lock
 
 # husky
 .husky
-
-# typescript
-tsconfig.json
