@@ -14,7 +14,7 @@ type Props = AppProps & {
 initAuth()
 
 if (process.browser) {
-	window.onbeforeunload = () => {
+	window.onunload = window.onbeforeunload = () => {
 		if (firebase.auth().currentUser) {
 			const { uid } = firebase.auth().currentUser
 			logoutUser(uid)
@@ -30,6 +30,12 @@ if (typeof window !== 'undefined') {
 		}
 	})
 	window.addEventListener('beforeunload', function (e) {
+		if (firebase.auth().currentUser) {
+			const { uid } = firebase.auth().currentUser
+			logoutUser(uid)
+		}
+	})
+	window.addEventListener('onunload', function (e) {
 		if (firebase.auth().currentUser) {
 			const { uid } = firebase.auth().currentUser
 			logoutUser(uid)
