@@ -21,12 +21,21 @@ if (process.browser) {
 		}
 	}
 }
-document.addEventListener('resume', () => {
-	if (firebase.auth().currentUser) {
-		const { uid } = firebase.auth().currentUser
-		logoutUser(uid)
-	}
-})
+
+if (typeof window !== 'undefined') {
+	window.document.addEventListener('resume', () => {
+		if (firebase.auth().currentUser) {
+			const { uid } = firebase.auth().currentUser
+			logoutUser(uid)
+		}
+	})
+	window.addEventListener('beforeunload', function (e) {
+		if (firebase.auth().currentUser) {
+			const { uid } = firebase.auth().currentUser
+			logoutUser(uid)
+		}
+	})
+}
 const App: React.FC<AppProps> = ({ Component, pageProps }: Props): JSX.Element => {
 	const getLayout = Component.getLayout || ((page) => page)
 
