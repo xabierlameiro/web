@@ -42,6 +42,11 @@ if (typeof window !== 'undefined') {
 		}
 	})
 }
+firebase.auth().onAuthStateChanged((user) => {
+	if (!user) {
+		logoutUser(user.uid)
+	}
+})
 const App: React.FC<AppProps> = ({ Component, pageProps }: Props): JSX.Element => {
 	const getLayout = Component.getLayout || ((page) => page)
 

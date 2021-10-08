@@ -27,5 +27,7 @@ if (typeof window !== 'undefined') {
 				: firebase.auth.Auth.Persistence.SESSION
 		)
 }
+// TODO
+// functions.auth.user().onCreate((user) => {})
 
 export const db = firebase.firestore()
