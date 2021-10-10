@@ -5,7 +5,10 @@ import { Marker } from 'react-map-gl'
 import { useGeoPosition } from '@/hooks/useGeoPosition'
 import { LOADING, DENIED, AGREED, PENDING } from '@/constants/geolocation'
 
-const ReactMap = dynamic(() => import('react-map-gl'), { loading: () => <CoffeeLoading /> })
+const ReactMap = dynamic(() => import('react-map-gl'), {
+	loading: () => <CoffeeLoading />,
+	ssr: false,
+})
 
 const Map = (): JSX.Element => {
 	const { handlePermission, consent, mapPosition, changeMapPosition, userPosition } =
