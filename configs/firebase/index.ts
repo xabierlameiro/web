@@ -38,3 +38,4 @@ if (typeof window !== 'undefined') {
 // functions.auth.user().onCreate((user) => {})
 
 export const db = firebase.firestore()
+export const rtdb = firebase.database()
