@@ -35,16 +35,6 @@ const Index = (): JSX.Element => {
 
 	return (
 		<div>
-			{/* <p>uid : {user.id}</p>
-			<p>name : {user.displayName}</p>
-			{user.photoURL && (
-				<Image src={user.photoURL} alt={user.displayName} width='200px' height='200px' />
-			)}
-			<br />
-			<button onClick={() => signOut()}>Logout</button> */}
-			{users?.map((user) => (
-				<p key={user.uid}>{`login : ${user.logged}`}</p>
-			))}
 			{dbusers?.map((user) => (
 				<p key={user.state}>{`login : ${user.state}`}</p>
 			))}
