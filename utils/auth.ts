@@ -1,5 +1,6 @@
 import firebase from 'firebase/app'
 import { updateUser, logoutUser } from '@/utils/db'
+import { goOffline } from '@/configs/firebase/real-time-database'
 
 export const signIn = (
 	provider: firebase.auth.GoogleAuthProvider | firebase.auth.GithubAuthProvider
@@ -34,6 +35,8 @@ export const signOut = ({ user }: { user: firebase.User }): Promise<boolean | Er
 			.signOut()
 			.then(() => {
 				if (user) logoutUser(user.uid)
+				if (user) goOffline(user.uid)
+
 				resolve(true)
 			})
 			.catch((error) => {

@@ -4,7 +4,6 @@ import { withAuthUser } from 'next-firebase-auth'
 import initAuth from '@/configs/firebase/next-firebase-auth'
 import firebase from 'firebase/app'
 import { logoutUser } from '@/utils/db'
-import '@/configs/firebase/real-time-database'
 
 import type { Page } from '../types/page'
 
