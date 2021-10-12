@@ -8,7 +8,7 @@ const useMapStore = create<useMapStoreType>(
 	persist(
 		devtools((set) => ({
 			mapPosition: {
-				zoom: 18,
+				zoom: 8,
 				width: '100%',
 				height: '100%',
 				latitude: 42.5825647,

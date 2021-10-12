@@ -11,8 +11,8 @@ const ReactMap = dynamic(() => import('react-map-gl'), {
 	ssr: false,
 })
 
-const Map = (): JSX.Element => {
-	const { handlePermission, mapPosition, changeMapPosition, userPosition } = useGeoPosition()
+const Map = ({ users }) => {
+	const { handlePermission, mapPosition, changeMapPosition } = useGeoPosition()
 
 	const [consent, setConsent] = useState(LOADING)
 
@@ -31,6 +31,22 @@ const Map = (): JSX.Element => {
 			result.onchange = () => bla(result.state)
 		})
 	})
+
+	const Markers = (): JSX.Element =>
+		users?.map((user) => {
+			return (
+				<Marker
+					key={user.uid}
+					latitude={user?.latitude}
+					longitude={user?.longitude}
+					offsetLeft={-20}
+					offsetTop={-10}>
+					<div style={{ color: 'red' }}>{user.name}</div>
+					<div style={{ color: 'red' }}>{user.state}</div>
+				</Marker>
+			)
+		})
+
 	if (consent === LOADING) return <CoffeeLoading />
 
 	if (consent === DENIED) return <h1>No hay permisos de ubicación</h1>
@@ -42,13 +58,7 @@ const Map = (): JSX.Element => {
 				onViewportChange={(viewport) => changeMapPosition(viewport)}
 				mapStyle={process.env.mapbox_style}
 				mapboxApiAccessToken={process.env.mapbox_key}>
-				<Marker
-					latitude={userPosition?.latitude}
-					longitude={userPosition?.longitude}
-					offsetLeft={-20}
-					offsetTop={-10}>
-					<div>You are here</div>
-				</Marker>
+				<Markers />
 			</ReactMap>
 		)
 

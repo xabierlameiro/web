@@ -10,19 +10,21 @@ const Index = (): JSX.Element => {
 	const [users, setUsers] = useState([])
 
 	useEffect(() => {
-		db.collection('users').onSnapshot((querySnapshot) => {
-			const docs = []
-			querySnapshot.forEach((doc) => {
-				docs.push(doc.data())
+		db.collection('users')
+			.where('latitude', '!=', 'undefined')
+			.onSnapshot((querySnapshot) => {
+				const docs = []
+				querySnapshot.forEach((doc) => {
+					docs.push(doc.data())
+				})
+				setUsers(docs)
 			})
-			setUsers(docs)
-		})
 		return () => {
 			setUsers([])
 		}
 	}, [])
 
-	return <Map />
+	return <Map users={users} />
 }
 
 Index.getLayout = function getLayout(page) {
