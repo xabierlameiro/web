@@ -1,8 +1,5 @@
 import { useEffect, useState } from 'react'
-// import { useAuthUser } from 'next-firebase-auth'
-// import { signOut } from '@/utils/auth'
-// import Image from 'next/image'
-import { rtdb } from '@/firebase'
+import { db } from '@/firebase'
 import Layout from '@/components/Layout'
 
 const Index = (): JSX.Element => {
@@ -10,15 +7,13 @@ const Index = (): JSX.Element => {
 	const [users, setUsers] = useState([])
 
 	useEffect(() => {
-		rtdb.ref('status').on('value', (snapshot) => {
+		db.collection('users').onSnapshot((querySnapshot) => {
 			const docs = []
-			snapshot.forEach((childSnapshot) => {
-				docs.push(childSnapshot.val())
-				// ...
+			querySnapshot.forEach((doc) => {
+				docs.push(doc.data())
 			})
 			setUsers(docs)
 		})
-
 		return () => {
 			setUsers([])
 		}
@@ -26,8 +21,8 @@ const Index = (): JSX.Element => {
 
 	return (
 		<div>
-			{users?.map((user, index) => (
-				<p key={index}>{`login : ${user.state}`}</p>
+			{users?.map((user) => (
+				<p key={user.uid}>{`login : ${user.state}`}</p>
 			))}
 		</div>
 	)
