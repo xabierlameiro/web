@@ -30,7 +30,7 @@ if (typeof window !== 'undefined') {
 
 	firebase.auth().onAuthStateChanged(function (user) {
 		if (user) {
-			updatePresence()
+			// updatePresence()
 		}
 	})
 }
