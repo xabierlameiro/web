@@ -1,12 +1,12 @@
 import create from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
-import { LOADING, DENIED, AGREED, PENDING } from '@/constants/geolocation'
 import type { useGeoLocationType, useMapStoreType } from './useGeoPosition.types'
+import { updateUser } from '@/utils/db'
+import firebase from 'firebase/app'
 
 const useMapStore = create<useMapStoreType>(
 	persist(
 		devtools((set) => ({
-			consent: PENDING,
 			mapPosition: {
 				zoom: 18,
 				width: '100%',
@@ -15,10 +15,6 @@ const useMapStore = create<useMapStoreType>(
 				longitude: -8.5961088,
 			},
 			userPosition: { latitude: null, longitude: null },
-			changeConsetStatus: (consent) =>
-				set((state) => {
-					state.consent = consent
-				}),
 			changeMapPosition: (mapPosition) =>
 				set((state) => {
 					state.mapPosition.latitude = mapPosition.latitude
@@ -38,34 +34,29 @@ const useMapStore = create<useMapStoreType>(
 )
 
 const useGeoPosition = (): useGeoLocationType => {
-	const { changeConsetStatus, changeMapPosition, changeUserPosition } = useMapStore(
-		(state) => state
-	)
+	const { changeMapPosition, changeUserPosition } = useMapStore((state) => state)
 
 	const handlePermission = (): void => {
 		if (navigator.geolocation) {
-			changeConsetStatus(LOADING)
 			navigator.geolocation.getCurrentPosition(
 				({ coords }) => {
 					const { latitude, longitude } = coords
 					changeMapPosition({ latitude, longitude })
 					changeUserPosition({ latitude, longitude })
-					changeConsetStatus(AGREED)
+					updateUser(firebase.auth().currentUser.uid, { latitude, longitude })
 				},
-				() => changeConsetStatus(DENIED),
+				() => console.log('DENIED'),
 				{
 					enableHighAccuracy: true,
 					timeout: 10000,
 				}
 			)
-		} else {
-			changeConsetStatus('NOT_SUPPORTED')
 		}
 	}
 
-	const { consent, mapPosition, userPosition } = useMapStore((state) => state)
+	const { mapPosition, userPosition } = useMapStore((state) => state)
 
-	return { handlePermission, consent, mapPosition, changeMapPosition, userPosition }
+	return { handlePermission, mapPosition, changeMapPosition, userPosition }
 }
 
 export { useGeoPosition }

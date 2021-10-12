@@ -7,13 +7,14 @@ const isOfflineForDatabase = {
 	last_changed: firebase.database.ServerValue.TIMESTAMP,
 }
 
-const isOnlineForDatabase = {
-	state: 'online',
-	last_changed: firebase.database.ServerValue.TIMESTAMP,
-}
 const isOfflineForFirestore = {
 	state: 'offline',
 	last_changed: firebase.firestore.FieldValue.serverTimestamp(),
+}
+
+const isOnlineForDatabase = {
+	state: 'online',
+	last_changed: firebase.database.ServerValue.TIMESTAMP,
 }
 
 const isOnlineForFirestore = {

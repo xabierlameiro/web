@@ -1,6 +1,7 @@
 import firebase from 'firebase/app'
 import 'firebase/firestore'
 import 'firebase/database'
+import { updatePresence } from '@/configs/firebase/real-time-database'
 
 if (!firebase.apps.length) {
 	firebase.initializeApp({
@@ -28,6 +29,11 @@ if (typeof window !== 'undefined') {
 				: firebase.auth.Auth.Persistence.SESSION
 		)
 }
+firebase.auth().onAuthStateChanged(function (user) {
+	if (user) {
+		updatePresence()
+	}
+})
 
 export const db = firebase.firestore()
 export const rtdb = firebase.database()

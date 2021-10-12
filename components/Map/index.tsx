@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { CoffeeLoading } from 'react-loadingg'
 import dynamic from 'next/dynamic'
 import 'mapbox-gl/dist/mapbox-gl.css'
@@ -11,9 +12,25 @@ const ReactMap = dynamic(() => import('react-map-gl'), {
 })
 
 const Map = (): JSX.Element => {
-	const { handlePermission, consent, mapPosition, changeMapPosition, userPosition } =
-		useGeoPosition()
+	const { handlePermission, mapPosition, changeMapPosition, userPosition } = useGeoPosition()
 
+	const [consent, setConsent] = useState(LOADING)
+
+	const bla = (state) => {
+		if (state === 'granted') {
+			setConsent(AGREED)
+		} else if (state === 'prompt') {
+			setConsent(PENDING)
+		} else if (state === 'denied') {
+			setConsent(DENIED)
+		}
+	}
+	useEffect(() => {
+		navigator.permissions.query({ name: 'geolocation' }).then(function (result) {
+			bla(result.state)
+			result.onchange = () => bla(result.state)
+		})
+	})
 	if (consent === LOADING) return <CoffeeLoading />
 
 	if (consent === DENIED) return <h1>No hay permisos de ubicación</h1>

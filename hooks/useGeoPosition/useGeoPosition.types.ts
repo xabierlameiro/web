@@ -31,7 +31,6 @@ export type MapStateProps = WebMercatorViewportOptions & InteractiveState
 
 export type useGeoLocationType = {
 	handlePermission: () => void
-	consent: string
 	mapPosition: WebMercatorViewportOptions
 	changeMapPosition: (location: WebMercatorViewportOptions) => void
 	userPosition: WebMercatorViewportOptions | undefined
@@ -42,10 +41,8 @@ type coordsType = {
 	longitude?: number
 }
 export type useMapStoreType = {
-	consent: string
 	mapPosition: WebMercatorViewportOptions
 	userPosition: WebMercatorViewportOptions
-	changeConsetStatus: (consent: string) => void
 	changeMapPosition: (mapPosition: coordsType) => void
 	changeUserPosition: (userPosition: coordsType) => void
 }

@@ -1,6 +1,6 @@
 import firebase from 'firebase/app'
-import { updateUser } from '@/utils/db'
-import { goOffline, updatePresence } from '@/configs/firebase/real-time-database'
+import { setUser } from '@/utils/db'
+import { goOffline } from '@/configs/firebase/real-time-database'
 
 export const signIn = (
 	provider: firebase.auth.GoogleAuthProvider | firebase.auth.GithubAuthProvider
@@ -11,8 +11,7 @@ export const signIn = (
 				.auth()
 				.signInWithPopup(provider)
 				.then(({ user }) => {
-					updateUser(user)
-					updatePresence()
+					setUser(user)
 					resolve(true)
 				})
 				.catch((error) => {

@@ -20,7 +20,7 @@ const initAuth = (): void => {
 		},
 		firebaseClientInitConfig: {
 			apiKey: 'AIzaSyAk24ODstuf6_xDsNRacVJrnKDa_5jWl7Y',
-			authDomain: 'weeb-cbe98.firebaseapp.com',
+			authDomain: 'auth.xabierlameiro.com',
 			projectId: 'weeb-cbe98',
 			databaseURL: 'https://weeb-cbe98-default-rtdb.europe-west1.firebasedatabase.app',
 		},
