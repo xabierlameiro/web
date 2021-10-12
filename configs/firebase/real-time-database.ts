@@ -5,6 +5,7 @@ const updatePresence = (): void => {
 	const uid = firebase.auth().currentUser.uid
 
 	const userStatusDatabaseRef = firebase.database().ref('/status/' + uid)
+	const userStatusFirestoreRef = firebase.firestore().doc('/status/' + uid)
 
 	const isOfflineForDatabase = {
 		state: 'offline',
@@ -15,12 +16,22 @@ const updatePresence = (): void => {
 		state: 'online',
 		last_changed: firebase.database.ServerValue.TIMESTAMP,
 	}
+	const isOfflineForFirestore = {
+		state: 'offline',
+		last_changed: firebase.firestore.FieldValue.serverTimestamp(),
+	}
+
+	const isOnlineForFirestore = {
+		state: 'online',
+		last_changed: firebase.firestore.FieldValue.serverTimestamp(),
+	}
 
 	firebase
 		.database()
 		.ref('.info/connected')
 		.on('value', function (snapshot) {
 			if (snapshot.val() === false) {
+				userStatusFirestoreRef.set(isOfflineForFirestore)
 				return
 			}
 
@@ -29,6 +40,7 @@ const updatePresence = (): void => {
 				.set(isOfflineForDatabase)
 				.then(function () {
 					userStatusDatabaseRef.set(isOnlineForDatabase)
+					userStatusFirestoreRef.set(isOnlineForFirestore)
 				})
 		})
 
