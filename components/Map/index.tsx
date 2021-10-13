@@ -2,10 +2,39 @@ import { useEffect, useState, useCallback } from 'react'
 import Image from 'next/image'
 import { CoffeeLoading } from 'react-loadingg'
 import dynamic from 'next/dynamic'
-import { Marker } from 'react-map-gl'
 import { useGeoPosition } from '@/hooks/useGeoPosition'
-import { LOADING, DENIED, AGREED, PENDING } from '@/constants/geolocation'
 import 'mapbox-gl/dist/mapbox-gl.css'
+import {
+	Marker,
+	GeolocateControl,
+	FullscreenControl,
+	NavigationControl,
+	ScaleControl,
+} from 'react-map-gl'
+
+const geolocateStyle = {
+	top: 0,
+	left: 0,
+	padding: '10px',
+}
+
+const fullscreenControlStyle = {
+	top: 36,
+	left: 0,
+	padding: '10px',
+}
+
+const navStyle = {
+	top: 72,
+	left: 0,
+	padding: '10px',
+}
+
+const scaleControlStyle = {
+	bottom: 36,
+	left: 0,
+	padding: '10px',
+}
 
 const ReactMap = dynamic(() => import('react-map-gl'), {
 	loading: () => <CoffeeLoading />,
@@ -15,15 +44,15 @@ const ReactMap = dynamic(() => import('react-map-gl'), {
 const Map = ({ users }: { users: any }): JSX.Element => {
 	const { handlePermission, mapPosition, changeMapPosition } = useGeoPosition()
 
-	const [consent, setConsent] = useState(LOADING)
+	const [consent, setConsent] = useState(useGeoPosition.LOADING)
 
 	const bla = (state) => {
 		if (state === 'granted') {
-			setConsent(AGREED)
+			setConsent(useGeoPosition.AGREED)
 		} else if (state === 'prompt') {
-			setConsent(PENDING)
+			setConsent(useGeoPosition.PENDING)
 		} else if (state === 'denied') {
-			setConsent(DENIED)
+			setConsent(useGeoPosition.DENIED)
 		}
 	}
 	useEffect(() => {
@@ -47,21 +76,28 @@ const Map = ({ users }: { users: any }): JSX.Element => {
 		))
 	}, [users])
 
-	if (consent === LOADING) return <CoffeeLoading />
+	if (consent === useGeoPosition.LOADING) return <CoffeeLoading />
 
-	if (consent === DENIED) return <h1>No hay permisos de ubicación</h1>
+	if (consent === useGeoPosition.DENIED) return <h1>No hay permisos de ubicación</h1>
 
-	if (consent === AGREED)
+	if (consent === useGeoPosition.AGREED)
 		return (
 			<ReactMap
 				{...mapPosition}
+				width='100%'
+				height='100%'
 				onViewportChange={(viewport) => changeMapPosition(viewport)}
 				mapStyle={process.env.mapbox_style}
 				mapboxApiAccessToken={process.env.mapbox_key}>
 				<Markers />
+				<GeolocateControl style={geolocateStyle} />
+				<FullscreenControl style={fullscreenControlStyle} />
+				<NavigationControl style={navStyle} />
+				<ScaleControl style={scaleControlStyle} />
 			</ReactMap>
 		)
 
-	if (consent === PENDING) return <button onClick={handlePermission}>TEST PROMPT</button>
+	if (consent === useGeoPosition.PENDING)
+		return <button onClick={handlePermission}>TEST PROMPT</button>
 }
 export { Map, Map as default }

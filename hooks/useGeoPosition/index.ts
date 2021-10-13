@@ -3,23 +3,27 @@ import { devtools, persist } from 'zustand/middleware'
 import type { useGeoLocationType, useMapStoreType } from './useGeoPosition.types'
 import { updateUser } from '@/utils/db'
 import firebase from 'firebase/app'
+import { LOADING, DENIED, AGREED, PENDING } from '@/constants/geolocation'
 
 const useMapStore = create<useMapStoreType>(
 	persist(
 		devtools((set) => ({
 			mapPosition: {
 				zoom: 8,
-				width: '100%',
-				height: '100%',
 				latitude: 42.5825647,
 				longitude: -8.5961088,
+				bearing: 0,
+				pitch: 0,
 			},
 			userPosition: { latitude: null, longitude: null },
-			changeMapPosition: (mapPosition) =>
+			changeMapPosition: (mapPosition) => {
+				console.log('mapPosition', mapPosition)
 				set((state) => {
 					state.mapPosition.latitude = mapPosition.latitude
 					state.mapPosition.longitude = mapPosition.longitude
-				}),
+					state.mapPosition.zoom = mapPosition.zoom
+				})
+			},
 			changeUserPosition: (userPosition) =>
 				set((state) => {
 					state.userPosition.latitude = userPosition.latitude
@@ -58,5 +62,10 @@ const useGeoPosition = (): useGeoLocationType => {
 
 	return { handlePermission, mapPosition, changeMapPosition, userPosition }
 }
+
+useGeoPosition.LOADING = LOADING
+useGeoPosition.DENIED = DENIED
+useGeoPosition.AGREED = AGREED
+useGeoPosition.PENDING = PENDING
 
 export { useGeoPosition }

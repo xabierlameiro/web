@@ -5,7 +5,7 @@ const os = require('os')
 module.exports = {
 	env: {
 		mapbox_key:
-			'pk.eyJ1IjoieGxhbWVpcm8iLCJhIjoiY2t0a2c1cGx5MDVxeDJ1cHFmMjZoYnoyaSJ9.ooM903cpOLFn2qiTsJLBCA',
+			'pk.eyJ1IjoieGxhbWVpcm8iLCJhIjoiY2t0a2Z3dWZsMWw4azJ3am9qcW82ZnI1cSJ9.jkgRO3RjPQ-yxw-hmhay4w',
 		mapbox_style: 'mapbox://styles/xlameiro/cktkh1izv83wa17p9p48odxgg',
 	},
 	webpack: null,
