@@ -1,17 +1,18 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
+import Image from 'next/image'
 import { CoffeeLoading } from 'react-loadingg'
 import dynamic from 'next/dynamic'
-import 'mapbox-gl/dist/mapbox-gl.css'
 import { Marker } from 'react-map-gl'
 import { useGeoPosition } from '@/hooks/useGeoPosition'
 import { LOADING, DENIED, AGREED, PENDING } from '@/constants/geolocation'
+import 'mapbox-gl/dist/mapbox-gl.css'
 
 const ReactMap = dynamic(() => import('react-map-gl'), {
 	loading: () => <CoffeeLoading />,
 	ssr: false,
 })
 
-const Map = ({ users }) => {
+const Map = ({ users }: { users: any }): JSX.Element => {
 	const { handlePermission, mapPosition, changeMapPosition } = useGeoPosition()
 
 	const [consent, setConsent] = useState(LOADING)
@@ -32,20 +33,19 @@ const Map = ({ users }) => {
 		})
 	})
 
-	const Markers = (): JSX.Element =>
-		users?.map((user) => {
-			return (
-				<Marker
-					key={user.uid}
-					latitude={user?.latitude}
-					longitude={user?.longitude}
-					offsetLeft={-20}
-					offsetTop={-10}>
-					<div style={{ color: 'red' }}>{user.name}</div>
-					<div style={{ color: 'red' }}>{user.state}</div>
-				</Marker>
-			)
-		})
+	const Markers = useCallback(() => {
+		return users?.map((user) => (
+			<Marker
+				className={`avatar avatar--${user.state}`}
+				key={user.uid}
+				latitude={user?.latitude}
+				longitude={user?.longitude}
+				offsetLeft={-20}
+				offsetTop={-10}>
+				<Image src={user.photoURL} alt={user.name} width='100%' height='100%' />
+			</Marker>
+		))
+	}, [users])
 
 	if (consent === LOADING) return <CoffeeLoading />
 
