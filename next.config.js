@@ -33,7 +33,7 @@ module.exports = {
 		imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
 		path: '/_next/image',
 		loader: 'default',
-		domains: ['lh3.googleusercontent.com'],
+		domains: ['lh3.googleusercontent.com', 'avatars.githubusercontent.com'],
 		disableStaticImages: false,
 		minimumCacheTTL: 60,
 	},

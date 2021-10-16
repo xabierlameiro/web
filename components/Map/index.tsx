@@ -56,11 +56,15 @@ const Map = ({ users }: { users: any }): JSX.Element => {
 		}
 	}
 	useEffect(() => {
-		navigator.permissions.query({ name: 'geolocation' }).then(function (result) {
-			bla(result.state)
-			result.onchange = () => bla(result.state)
-		})
-	})
+		navigator.geolocation.watchPosition(
+			function () {
+				setConsent(useGeoPosition.AGREED)
+			},
+			function (error) {
+				if (error.code === error.PERMISSION_DENIED) setConsent(useGeoPosition.DENIED)
+			}
+		)
+	}, [])
 
 	const Markers = useCallback(() => {
 		return users?.map((user) => (
