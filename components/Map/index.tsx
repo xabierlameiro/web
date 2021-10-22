@@ -4,6 +4,9 @@ import { CoffeeLoading } from 'react-loadingg'
 import dynamic from 'next/dynamic'
 import { useGeoPosition } from '@/hooks/useGeoPosition'
 import 'mapbox-gl/dist/mapbox-gl.css'
+import { updateUser } from '@/utils/db'
+import firebase from 'firebase/app'
+
 import {
 	Marker,
 	GeolocateControl,
@@ -56,15 +59,23 @@ const Map = ({ users }: { users: any }): JSX.Element => {
 		}
 	}
 	useEffect(() => {
-		navigator.geolocation.watchPosition(
-			function () {
-				setConsent(useGeoPosition.AGREED)
-			},
-			function (error) {
-				if (error.code === error.PERMISSION_DENIED) setConsent(useGeoPosition.DENIED)
-			}
-		)
-	}, [])
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(
+				({ coords }) => {
+					console.log('HOLA')
+					const { latitude, longitude } = coords
+					changeMapPosition({ latitude, longitude })
+					setConsent(useGeoPosition.AGREED)
+					updateUser(firebase.auth().currentUser.uid, { latitude, longitude })
+				},
+				() => console.log('DENIED'),
+				{
+					enableHighAccuracy: true,
+					timeout: 10000,
+				}
+			)
+		}
+	}, [changeMapPosition])
 
 	const Markers = useCallback(() => {
 		return users?.map((user) => (

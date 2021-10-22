@@ -17,7 +17,6 @@ const useMapStore = create<useMapStoreType>(
 			},
 			userPosition: { latitude: null, longitude: null },
 			changeMapPosition: (mapPosition) => {
-				console.log('mapPosition', mapPosition)
 				set((state) => {
 					state.mapPosition.latitude = mapPosition.latitude
 					state.mapPosition.longitude = mapPosition.longitude
