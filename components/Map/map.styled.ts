@@ -1,7 +1,7 @@
 import { Marker } from 'react-map-gl'
 import styled from 'styled-components'
 
-export const CustomMarker = styled(Marker)`
+export const CustomMarker = styled(Marker)<{ zoom: number; online: string }>`
 	width: ${(props) => props.zoom * 20}px;
 	height: ${(props) => props.zoom * 20}px;
 	border-radius: 100px;

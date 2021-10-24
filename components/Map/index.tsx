@@ -5,9 +5,9 @@ import dynamic from 'next/dynamic'
 import { useGeoPosition } from '@/hooks/useGeoPosition'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import { updateUser } from '@/utils/db'
-import firebase from 'firebase/app'
 import { CustomMarker } from './map.styled'
 import { GeolocateControl, FullscreenControl, NavigationControl, ScaleControl } from 'react-map-gl'
+import { useAuthUser } from 'next-firebase-auth'
 
 const geolocateStyle = {
 	top: 0,
@@ -42,6 +42,7 @@ const Map = ({ users }: { users: any }): JSX.Element => {
 	const { handlePermission, mapPosition, changeMapPosition } = useGeoPosition()
 
 	const [consent, setConsent] = useState(useGeoPosition.LOADING)
+	const AuthUser = useAuthUser()
 
 	useEffect(() => {
 		if (navigator.geolocation) {
@@ -50,8 +51,8 @@ const Map = ({ users }: { users: any }): JSX.Element => {
 					const { latitude, longitude } = coords
 					changeMapPosition({ latitude, longitude })
 					setConsent(useGeoPosition.AGREED)
-					if (firebase.auth().currentUser) {
-						updateUser(firebase.auth().currentUser.uid, { latitude, longitude })
+					if (AuthUser) {
+						updateUser(AuthUser.id, { latitude, longitude })
 					}
 				},
 				() => setConsent(useGeoPosition.DENIED),
@@ -61,7 +62,7 @@ const Map = ({ users }: { users: any }): JSX.Element => {
 				}
 			)
 		}
-	}, [changeMapPosition])
+	}, [changeMapPosition, AuthUser])
 
 	const Markers = useCallback(() => {
 		return users?.map((user) => (

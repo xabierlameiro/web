@@ -1,9 +1,9 @@
 import Link from 'next/link'
 import { signOut } from '@/utils/auth'
-import firebase from 'firebase/app'
+import { useAuthUser } from 'next-firebase-auth'
 
 const NavBar = (): JSX.Element => {
-	const user = firebase.auth().currentUser
+	const AuthUser = useAuthUser()
 	return (
 		<header>
 			<ul>
@@ -13,9 +13,9 @@ const NavBar = (): JSX.Element => {
 				<li>
 					<Link href='/map'>Map</Link>
 				</li>
-				{user && (
+				{AuthUser && (
 					<li>
-						<a onClick={() => signOut({ user })}>Logout</a>
+						<a onClick={() => signOut({ AuthUser })}>Logout</a>
 					</li>
 				)}
 			</ul>

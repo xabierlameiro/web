@@ -2,8 +2,8 @@ import create from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 import type { useGeoLocationType, useMapStoreType } from './useGeoPosition.types'
 import { updateUser } from '@/utils/db'
-import firebase from 'firebase/app'
 import { LOADING, DENIED, AGREED, PENDING } from '@/constants/geolocation'
+import { useAuthUser } from 'next-firebase-auth'
 
 const useMapStore = create<useMapStoreType>(
 	persist(
@@ -38,7 +38,7 @@ const useMapStore = create<useMapStoreType>(
 
 const useGeoPosition = (): useGeoLocationType => {
 	const { changeMapPosition, changeUserPosition } = useMapStore((state) => state)
-
+	const user = useAuthUser()
 	const handlePermission = (): void => {
 		if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(
@@ -46,7 +46,7 @@ const useGeoPosition = (): useGeoLocationType => {
 					const { latitude, longitude } = coords
 					changeMapPosition({ latitude, longitude })
 					changeUserPosition({ latitude, longitude })
-					updateUser(firebase.auth().currentUser.uid, { latitude, longitude })
+					updateUser(user.id, { latitude, longitude })
 				},
 				() => console.log('DENIED'),
 				{
