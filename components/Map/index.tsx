@@ -6,14 +6,8 @@ import { useGeoPosition } from '@/hooks/useGeoPosition'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import { updateUser } from '@/utils/db'
 import firebase from 'firebase/app'
-
-import {
-	Marker,
-	GeolocateControl,
-	FullscreenControl,
-	NavigationControl,
-	ScaleControl,
-} from 'react-map-gl'
+import { CustomMarker } from './map.styled'
+import { GeolocateControl, FullscreenControl, NavigationControl, ScaleControl } from 'react-map-gl'
 
 const geolocateStyle = {
 	top: 0,
@@ -71,17 +65,18 @@ const Map = ({ users }: { users: any }): JSX.Element => {
 
 	const Markers = useCallback(() => {
 		return users?.map((user) => (
-			<Marker
-				className={`avatar avatar--${user.state}`}
+			<CustomMarker
+				zoom={mapPosition?.zoom}
+				online={user.state}
 				key={user.uid}
 				latitude={user?.latitude}
 				longitude={user?.longitude}
-				offsetLeft={-55}
-				offsetTop={-55}>
-				<Image src={user.photoURL} alt={user.name} width='100%' height='100%' />
-			</Marker>
+				offsetLeft={-((mapPosition?.zoom * 20) / 2)}
+				offsetTop={-((mapPosition?.zoom * 20) / 2)}>
+				<Image src={user.photoURL} alt={user.name} layout='fill' />
+			</CustomMarker>
 		))
-	}, [users])
+	}, [users, mapPosition])
 
 	if (consent === useGeoPosition.LOADING) return <CoffeeLoading />
 

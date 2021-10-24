@@ -1,4 +1,3 @@
-import './styles.css'
 import type { AppProps } from 'next/app'
 import { withAuthUser } from 'next-firebase-auth'
 import initAuth from '@/configs/firebase/next-firebase-auth'

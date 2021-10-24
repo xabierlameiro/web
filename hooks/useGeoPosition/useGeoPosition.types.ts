@@ -39,6 +39,7 @@ export type useGeoLocationType = {
 type coordsType = {
 	latitude?: number
 	longitude?: number
+	zoom?: number
 }
 export type useMapStoreType = {
 	mapPosition: WebMercatorViewportOptions
