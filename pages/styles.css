@@ -32,10 +32,15 @@ body ul li {
 	border: 5px solid grey;
 	width: 100px;
 	height: 100px;
+	z-index: 1;
 }
 .avatar.avatar--online {
 	border: 5px solid green;
 }
+.avatar:hover {
+	z-index: 2;
+}
+
 .avatar img {
 	border-radius: 100px;
 }

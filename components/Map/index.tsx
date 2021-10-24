@@ -76,8 +76,8 @@ const Map = ({ users }: { users: any }): JSX.Element => {
 				key={user.uid}
 				latitude={user?.latitude}
 				longitude={user?.longitude}
-				offsetLeft={-20}
-				offsetTop={-10}>
+				offsetLeft={-55}
+				offsetTop={-55}>
 				<Image src={user.photoURL} alt={user.name} width='100%' height='100%' />
 			</Marker>
 		))

@@ -13,6 +13,7 @@ module.exports = {
       https://jestjs.io/docs/webpack#handling-static-assets */
 		'^.+\\.(jpg|jpeg|png|gif|webp|svg)$': '<rootDir>/__mocks__/fileMock.js',
 		'^@/configs(.*)$': '<rootDir>/configs$1',
+		'^@/styles(.*)$': '<rootDir>/styles$1',
 		'^@/utils(.*)$': '<rootDir>/utils$1',
 		'^@/hooks(.*)$': '<rootDir>/hooks$1',
 		'^@/firebase(.*)$': '<rootDir>/configs/firebase/',

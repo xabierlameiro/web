@@ -21,7 +21,8 @@
 			"@/utils/*": ["utils/*"],
 			"@/configs/*": ["configs/*"],
 			"@/components/*": ["components/*"],
-			"@/constants/*": ["constants/*"]
+			"@/constants/*": ["constants/*"],
+			"@/styles/*": ["styles/*"]
 		}
 	},
 	"include": ["."],
