@@ -49,26 +49,18 @@ const Map = ({ users }: { users: any }): JSX.Element => {
 
 	const [consent, setConsent] = useState(useGeoPosition.LOADING)
 
-	const bla = (state) => {
-		if (state === 'granted') {
-			setConsent(useGeoPosition.AGREED)
-		} else if (state === 'prompt') {
-			setConsent(useGeoPosition.PENDING)
-		} else if (state === 'denied') {
-			setConsent(useGeoPosition.DENIED)
-		}
-	}
 	useEffect(() => {
 		if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(
 				({ coords }) => {
-					console.log('HOLA')
 					const { latitude, longitude } = coords
 					changeMapPosition({ latitude, longitude })
 					setConsent(useGeoPosition.AGREED)
-					updateUser(firebase.auth().currentUser.uid, { latitude, longitude })
+					if (firebase.auth().currentUser) {
+						updateUser(firebase.auth().currentUser.uid, { latitude, longitude })
+					}
 				},
-				() => console.log('DENIED'),
+				() => setConsent(useGeoPosition.DENIED),
 				{
 					enableHighAccuracy: true,
 					timeout: 10000,
