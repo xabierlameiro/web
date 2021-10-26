@@ -11,6 +11,9 @@ export const CustomMarker = styled(Marker)<{ zoom: number; online: string }>`
 	max-height: 100px;
 	z-index: 1;
 
+	&:hover {
+		z-index: 2;
+	}
 	img {
 		border-radius: 100px;
 	}

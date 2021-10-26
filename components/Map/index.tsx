@@ -43,6 +43,8 @@ const Map = ({ users }: { users: any }): JSX.Element => {
 
 	const [consent, setConsent] = useState(useGeoPosition.LOADING)
 	const AuthUser = useAuthUser()
+	const MarkerPosition =
+		(mapPosition?.zoom * 20.5) / 2 <= 50 ? -((mapPosition?.zoom * 20.5) / 2) : -50
 
 	useEffect(() => {
 		if (navigator.geolocation) {
@@ -72,12 +74,12 @@ const Map = ({ users }: { users: any }): JSX.Element => {
 				key={user.uid}
 				latitude={user?.latitude}
 				longitude={user?.longitude}
-				offsetLeft={-((mapPosition?.zoom * 20) / 2)}
-				offsetTop={-((mapPosition?.zoom * 20) / 2)}>
+				offsetLeft={MarkerPosition}
+				offsetTop={MarkerPosition}>
 				<Image src={user.photoURL} alt={user.name} layout='fill' />
 			</CustomMarker>
 		))
-	}, [users, mapPosition])
+	}, [users, mapPosition, MarkerPosition])
 
 	if (consent === useGeoPosition.LOADING) return <CoffeeLoading />
 

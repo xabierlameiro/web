@@ -4,6 +4,7 @@ import { useAuthUser } from 'next-firebase-auth'
 
 const NavBar = (): JSX.Element => {
 	const AuthUser = useAuthUser()
+	console.log('EEE', AuthUser)
 	return (
 		<header>
 			<ul>
@@ -13,7 +14,7 @@ const NavBar = (): JSX.Element => {
 				<li>
 					<Link href='/map'>Map</Link>
 				</li>
-				{AuthUser && (
+				{AuthUser?.firebaseUser && (
 					<li>
 						<a onClick={() => signOut({ AuthUser })}>Logout</a>
 					</li>
