@@ -7,12 +7,10 @@ import Layout from '@/components/Layout'
 
 const Buttons = () => {
 	const handleError = useErrorHandler()
-	const bla = () => signInWithGoogle().catch(handleError)
-	const ble = () => signInWithGitHub().catch(handleError)
 	return (
 		<>
-			<button onClick={bla}>Login</button>
-			<button onClick={ble}>Login Github</button>
+			<button onClick={() => signInWithGoogle().catch(handleError)}>Login</button>
+			<button onClick={() => signInWithGitHub().catch(handleError)}>Login Github</button>
 		</>
 	)
 }

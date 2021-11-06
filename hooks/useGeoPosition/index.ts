@@ -48,7 +48,7 @@ const useGeoPosition = (): useGeoLocationType => {
 					changeUserPosition({ latitude, longitude })
 					updateUser(firebase.auth().currentUser.uid, { latitude, longitude })
 				},
-				() => console.log('DENIED'),
+				() => console.log(DENIED),
 				{
 					enableHighAccuracy: true,
 					timeout: 10000,

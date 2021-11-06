@@ -1,37 +1,17 @@
-import { useEffect, useState, useCallback } from 'react'
-import Image from 'next/image'
+import { useEffect, useState } from 'react'
 import { CoffeeLoading } from 'react-loadingg'
 import dynamic from 'next/dynamic'
 import { useGeoPosition } from '@/hooks/useGeoPosition'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import { updateUser } from '@/utils/db'
 import firebase from 'firebase/app'
-import { CustomMarker } from './map.styled'
-import { GeolocateControl, FullscreenControl, NavigationControl, ScaleControl } from 'react-map-gl'
-
-const geolocateStyle = {
-	top: 0,
-	left: 0,
-	padding: '10px',
-}
-
-const fullscreenControlStyle = {
-	top: 36,
-	left: 0,
-	padding: '10px',
-}
-
-const navStyle = {
-	top: 72,
-	left: 0,
-	padding: '10px',
-}
-
-const scaleControlStyle = {
-	bottom: 36,
-	left: 0,
-	padding: '10px',
-}
+import {
+	GeolocateControlStyled,
+	FullscreenControlStyled,
+	NavigationControlStyled,
+	ScaleControlStyled,
+} from './map.styled'
+import Markers from '@/components/Marker'
 
 const ReactMap = dynamic(() => import('react-map-gl'), {
 	loading: () => <CoffeeLoading />,
@@ -63,21 +43,6 @@ const Map = ({ users }: { users: any }): JSX.Element => {
 		}
 	}, [changeMapPosition])
 
-	const Markers = useCallback(() => {
-		return users?.map((user) => (
-			<CustomMarker
-				zoom={mapPosition?.zoom}
-				online={user.state}
-				key={user.uid}
-				latitude={user?.latitude}
-				longitude={user?.longitude}
-				offsetLeft={-((mapPosition?.zoom * 20) / 2)}
-				offsetTop={-((mapPosition?.zoom * 20) / 2)}>
-				<Image src={user.photoURL} alt={user.name} layout='fill' />
-			</CustomMarker>
-		))
-	}, [users, mapPosition])
-
 	if (consent === useGeoPosition.LOADING) return <CoffeeLoading />
 
 	if (consent === useGeoPosition.DENIED) return <h1>No hay permisos de ubicación</h1>
@@ -91,11 +56,11 @@ const Map = ({ users }: { users: any }): JSX.Element => {
 				onViewportChange={(viewport) => changeMapPosition(viewport)}
 				mapStyle={process.env.mapbox_style}
 				mapboxApiAccessToken={process.env.mapbox_key}>
-				<Markers />
-				<GeolocateControl style={geolocateStyle} />
-				<FullscreenControl style={fullscreenControlStyle} />
-				<NavigationControl style={navStyle} />
-				<ScaleControl style={scaleControlStyle} />
+				<Markers users={users} mapPosition={mapPosition} />
+				<GeolocateControlStyled />
+				<FullscreenControlStyled />
+				<NavigationControlStyled />
+				<ScaleControlStyled />
 			</ReactMap>
 		)
 

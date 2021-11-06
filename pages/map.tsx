@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { withAuthUser, withAuthUserTokenSSR, AuthAction } from 'next-firebase-auth'
 import Map from '@/components/Map'
 import Layout from '@/components/Layout'
-
 import { db } from '@/firebase'
 import { CoffeeLoading } from 'react-loadingg'
 
