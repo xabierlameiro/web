@@ -10,15 +10,15 @@ import {
 	FullscreenControlStyled,
 	NavigationControlStyled,
 	ScaleControlStyled,
-} from './map.styled'
-import Markers from '@/components/Marker'
+} from './index.styled'
+import Markers from '@/components/Markers'
 
 const ReactMap = dynamic(() => import('react-map-gl'), {
 	loading: () => <CoffeeLoading />,
 	ssr: false,
 })
 
-const Map = ({ users }: { users: any }): JSX.Element => {
+const Map = ({ users }: { users: firebase.User[] }): JSX.Element => {
 	const { handlePermission, mapPosition, changeMapPosition } = useGeoPosition()
 
 	const [consent, setConsent] = useState(useGeoPosition.LOADING)
@@ -56,7 +56,7 @@ const Map = ({ users }: { users: any }): JSX.Element => {
 				onViewportChange={(viewport) => changeMapPosition(viewport)}
 				mapStyle={process.env.mapbox_style}
 				mapboxApiAccessToken={process.env.mapbox_key}>
-				<Markers users={users} mapPosition={mapPosition} />
+				<Markers users={users} zoom={mapPosition?.zoom} />
 				<GeolocateControlStyled />
 				<FullscreenControlStyled />
 				<NavigationControlStyled />
